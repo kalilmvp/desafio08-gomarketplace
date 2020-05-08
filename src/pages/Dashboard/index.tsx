@@ -21,28 +21,25 @@ import {
   ProductButton,
 } from './styles';
 
-interface Product {
-  id: string;
-  title: string;
-  image_url: string;
-  price: number;
-}
+import ProductModel from '../../models/product';
 
 const Dashboard: React.FC = () => {
   const { addToCart } = useCart();
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductModel[]>([]);
 
   useEffect(() => {
     async function loadProducts(): Promise<void> {
-      // TODO
+      const response = await api.get('products');
+
+      setProducts(response.data);
     }
 
     loadProducts();
   }, []);
 
-  function handleAddToCart(item: Product): void {
-    // TODO
+  function handleAddToCart(item: ProductModel): void {
+    addToCart(item);
   }
 
   return (
